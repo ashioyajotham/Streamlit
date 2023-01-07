@@ -3,7 +3,7 @@ import streamlit as st
 
 
 # loading the trained model
-pickle_in = open('classifier.pkl', 'rb') 
+pickle_in = open('LoanPrediction/classifier.pkl', 'rb') 
 classifier = pickle.load(pickle_in)
   
 @st.cache()
