@@ -1,5 +1,6 @@
 import pickle
 import streamlit as st
+import sklearn 
 from sklearn.ensemble import RandomForestClassifier
 
 # loading the trained model
