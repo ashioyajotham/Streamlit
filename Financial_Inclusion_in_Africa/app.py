@@ -78,7 +78,7 @@ submit = my_form.form_submit_button(label="make prediction")
 # load the model and one-hot-encoder and scaler
 
 with open(
-    join(dirname(realpath(__file__)), "fin-inclusion.pkl"),
+    join(dirname(realpath(__file__)), "Financial_Inclusion_in_Africa/model.txt"),
     "rb",
 ) as f:
     model = joblib.load(f)
