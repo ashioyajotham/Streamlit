@@ -1,10 +1,10 @@
 import pickle
 import streamlit as st
-import sklearn
+
 
 # loading the trained model
-with open("LoanPrediction/classifier.pkl", "rb") as f:
-        classifier = pickle.load(f) 
+pickle_in = open('classifier.pkl', 'rb') 
+classifier = pickle.load(pickle_in)
   
 @st.cache()
   
