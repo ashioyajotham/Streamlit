@@ -1,5 +1,6 @@
 import pickle
 import streamlit as st
+import sklearn
 
 # loading the trained model
 with open("LoanPrediction/classifier.pkl", "rb") as f:
