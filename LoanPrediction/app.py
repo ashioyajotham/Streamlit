@@ -1,10 +1,10 @@
 import pickle
 import streamlit as st
+from sklearn.ensemble import RandomForestClassifier
 
-path = 'Streamlit/LoanPrediction/classifier.pkl'
 # loading the trained model
-pickle_in = open(path, 'rb') 
-classifier = pickle.load(pickle_in)
+model = RandomForestClassifier()
+model.load_model('classifier.pkl')
  
 @st.cache()
   
