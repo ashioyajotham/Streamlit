@@ -6,7 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 
 # loading the trained model
 model = RandomForestClassifier()
-model.load_model('classifier.pkl')
+classifier = model.load_model('classifier.pkl')
  
 @st.cache()
   
