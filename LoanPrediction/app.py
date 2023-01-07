@@ -2,7 +2,7 @@ import pickle
 import streamlit as st
 
 # loading the trained model
-with open("classifier.pkl", "rb") as f:
+with open("LoanPrediction/classifier.pkl", "rb") as f:
         classifier = pickle.load(f) 
   
 @st.cache()
