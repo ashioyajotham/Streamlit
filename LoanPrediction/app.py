@@ -2,7 +2,7 @@ import pickle
 import streamlit as st
 
 # loading the trained model
-classifier.load_model('classifier.pkl')
+classifier = pickle.load("classifier.pkl")
  
 @st.cache()
   
