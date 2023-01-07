@@ -2,8 +2,9 @@ import pickle
 import streamlit as st
 
 # loading the trained model
-classifier = pickle.load("classifier.pkl", "rb")
- 
+with open("classifier.pkl", "rb") as f:
+        classifier = pickle.load(f) 
+  
 @st.cache()
   
 # defining the function which will make the prediction using the data which the user inputs 
