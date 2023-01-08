@@ -84,15 +84,6 @@ with open("Financial_Inclusion_in_Africa/fin-inclusion.pkl",
 
 @st.cache
 # function to clean and tranform the input
-def preprocessing_data(data):
-
-    # Convert the following numerical labels from integer to float
-    float_array = data[["household_size", "age_of_respondent", "year"]].values.astype(
-        float
-    )
-
-    
-    return data
 
 
 if submit:
@@ -112,38 +103,25 @@ if submit:
         "job_type": job_type,
     }
 
-    # clean and transform input
-    transformed_data = preprocessing_data(data=data)
-
-      
+          
     # create a dataframe
-    data = pd.DataFrame(transformed_data)
+    data = pd.DataFrame(inputs, columns=["country",
+        "year",
+        "location_type",
+        "cellphone_access",
+        "household_size",
+        "age_of_respondent",
+        "gender_of_respondent",
+        "relationship_with_head",
+        "marital_status",
+        "education_level",
+        "job_type"], index=[0])
     
     
     # perform prediction
-    prediction = model.predict(transformed_data, columns=["country",
-        "year",
-        "location_type",
-        "cellphone_access",
-        "household_size",
-        "age_of_respondent",
-        "gender_of_respondent",
-        "relationship_with_head",
-        "marital_status",
-        "education_level",
-        "job_type"])
+    prediction = model.predict(data)
     output = int(prediction[0])
-    probas = model.predict_proba(transformed_data, columns=["country",
-        "year",
-        "location_type",
-        "cellphone_access",
-        "household_size",
-        "age_of_respondent",
-        "gender_of_respondent",
-        "relationship_with_head",
-        "marital_status",
-        "education_level",
-        "job_type"])
+    probas = model.predict_proba(data)
     probability = "{:.2f}".format(float(probas[:, output]))
 
     # Display results
