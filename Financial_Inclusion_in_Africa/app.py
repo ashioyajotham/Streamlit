@@ -2,7 +2,6 @@
 import streamlit as st
 import joblib
 import pandas as pd
-from os.path import dirname, join, realpath
 
 # add banner image
 st.header("Financial Inclusion in Africa")
