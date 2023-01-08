@@ -113,7 +113,7 @@ if submit:
     }
 
     # create a dataframe
-    data = pd.DataFrame(input, index=[0])
+    data = pd.DataFrame(input)
     
     # clean and transform input
     transformed_data = preprocessing_data(data=data)
