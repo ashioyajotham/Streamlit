@@ -112,10 +112,11 @@ if submit:
     }
 
     # create a dataframe
+    input = model.get_booster().feature_names
     data = pd.DataFrame(input, index=[0])
 
     # clean and transform input
-    transformed_data = preprocessing_data(data=data).as_matrix()
+    transformed_data = preprocessing_data(data=data)
 
     # perform prediction
     prediction = model.predict(transformed_data)
