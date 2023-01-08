@@ -23,8 +23,10 @@ def predict_financial_inclusion(
         country = 1
     elif country == "Uganda":
         country = 2
-    else:
+    elif country == "Kenya":
         country = 3
+    else:
+        country = 4
 
     # year
     if year == "2016":
