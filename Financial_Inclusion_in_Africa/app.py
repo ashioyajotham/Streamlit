@@ -99,7 +99,7 @@ input = {
         "job_type": job_type,
     }
 # create a dataframe
-data = pd.DataFrame(inputs, columns=["country",
+data = pd.DataFrame(input, columns=["country",
         "year",
         "location_type",
         "cellphone_access",
