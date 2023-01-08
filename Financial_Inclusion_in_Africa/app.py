@@ -1,5 +1,6 @@
 #import packages 
 import streamlit as st
+import xgboost
 import joblib
 import pandas as pd
 
