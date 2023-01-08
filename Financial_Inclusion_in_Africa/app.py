@@ -161,8 +161,8 @@ def user_input_features():
 # Submit button
 if st.sidebar.button("Predict"):
     prediction = predict_financial_inclusion(
-        country, year, location_type, cellphone_access, 
-        houselhold_size, age_of_respondent, marital_status, education_level, job_type
+        "country", "year", "location_type", "cellphone_access", 
+        "houselhold_size", "age_of_respondent", "marital_status", "education_level", "job_type"
     )
     st.subheader("Prediction")
     if prediction == 1:
@@ -171,7 +171,7 @@ if st.sidebar.button("Predict"):
         st.success("The person is unlikely to have or use a bank account")
 
     st.subheader("Probability")
-    st.write(probability)
+    st.write(prediction)
 
 # add footer
 st.markdown(
@@ -185,5 +185,3 @@ footer {
 """,
     unsafe_allow_html=True,
 )
-
-# Add url
