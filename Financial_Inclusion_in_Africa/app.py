@@ -1,6 +1,7 @@
 #import packages 
 import streamlit as st
 import joblib
+import xgboost as xgb
 import pandas as pd
 
 # add banner image
@@ -113,6 +114,8 @@ if submit:
 
     # create a dataframe
     data = pd.DataFrame(input, index=[0])
+    data = xgb.DMatrix(data=data)
+
     
     # clean and transform input
     transformed_data = preprocessing_data(data=data)
