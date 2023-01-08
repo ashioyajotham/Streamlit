@@ -86,8 +86,6 @@ with open("Financial_Inclusion_in_Africa/fin-inclusion.pkl",
 # function to clean and tranform the input
 
 
-if submit:
-
     # collect inputs
     input = {
         "country": country,
