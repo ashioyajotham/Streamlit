@@ -141,7 +141,7 @@ if submit:
         "relationship_with_head",
         "marital_status",
         "education_level",
-        "job_type])
+        "job_type"])
     probability = "{:.2f}".format(float(probas[:, output]))
 
     # Display results
