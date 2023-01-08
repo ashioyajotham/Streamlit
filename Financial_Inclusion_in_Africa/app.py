@@ -113,10 +113,7 @@ if submit:
 
     # create a dataframe
     data = pd.DataFrame(input, index=[0])
-    cols_when_model_builds = model.get_booster().feature_names
-    data = data[[cols_when_model_builds]]
-
-
+    
     # clean and transform input
     transformed_data = preprocessing_data(data=data)
 
@@ -143,4 +140,4 @@ if submit:
 
 
 url = "https://twitter.com/ashioyajotham"
-st.write("Developed with ❤️ by [Victor Jotham Ashioya](%s)" % url)
+st.write("Developed by [Victor Jotham Ashioya](%s)" % url)
