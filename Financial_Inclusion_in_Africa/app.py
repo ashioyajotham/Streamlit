@@ -114,16 +114,34 @@ if submit:
 
     # create a dataframe
     data = pd.DataFrame(input, index=[0])
-    data = xgb.DMatrix(enable_categorical=True, data=data)
-
     
     # clean and transform input
     transformed_data = preprocessing_data(data=data)
 
     # perform prediction
-    prediction = model.predict(transformed_data)
+    prediction = model.predict(transformed_data, columns=["country",
+        "year",
+        "location_type",
+        "cellphone_access",
+        "household_size",
+        "age_of_respondent",
+        "gender_of_respondent",
+        "relationship_with_head",
+        "marital_status",
+        "education_level",
+        "job_type])
     output = int(prediction[0])
-    probas = model.predict_proba(transformed_data)
+    probas = model.predict_proba(transformed_data, columns=["country",
+        "year",
+        "location_type",
+        "cellphone_access",
+        "household_size",
+        "age_of_respondent",
+        "gender_of_respondent",
+        "relationship_with_head",
+        "marital_status",
+        "education_level",
+        "job_type])
     probability = "{:.2f}".format(float(probas[:, output]))
 
     # Display results
