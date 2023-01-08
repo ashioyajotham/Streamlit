@@ -158,4 +158,32 @@ def user_input_features():
     prediction = model.predict(df)
     probability = model.predict_proba(df)
 
+# Submit button
+if st.sidebar.button("Predict"):
+    prediction = predict_financial_inclusion(
+        country, year, location_type, cellphone_access, 
+        houselhold_size, age_of_respondent, marital_status, education_level, job_type
+    )
+    st.subheader("Prediction")
+    if prediction == 1:
+        st.success("The person is likely to have or use a bank account")
+    else:
+        st.success("The person is unlikely to have or use a bank account")
 
+    st.subheader("Probability")
+    st.write(probability)
+
+# add footer
+st.markdown(
+    """
+<style>
+footer {
+    color: #fff;
+    background-color: #111;
+}
+</style>
+""",
+    unsafe_allow_html=True,
+)
+
+# Add url
