@@ -119,7 +119,7 @@ if submit:
     transformed_data = preprocessing_data(data=data)
 
     # perform prediction
-    prediction = model.predict(transformed_data)
+    prediction = model.predict(transformed_data).as_matrix()
     output = int(prediction[0])
     probas = model.predict_proba(transformed_data)
     probability = "{:.2f}".format(float(probas[:, output]))
