@@ -114,7 +114,7 @@ if submit:
 
     # create a dataframe
     data = pd.DataFrame(input, index=[0])
-    data = xgb.DMatrix(data=data)
+    data = xgb.DMatrix(data=data, enable_categorical=True)
 
     
     # clean and transform input
