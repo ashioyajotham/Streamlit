@@ -112,8 +112,9 @@ if submit:
     }
 
     # create a dataframe
-    input = model.get_booster().feature_names
     data = pd.DataFrame(input, index=[0])
+    data = data.reindex(sorted(DataFrame.columns), axis = 1)
+
 
     # clean and transform input
     transformed_data = preprocessing_data(data=data)
