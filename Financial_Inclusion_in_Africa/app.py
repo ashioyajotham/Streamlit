@@ -3,6 +3,7 @@ import streamlit as st
 import joblib
 import xgboost as xgb
 import pandas as pd
+import numpy as np
 
 # add banner image
 st.header("Financial Inclusion in Africa")
@@ -158,20 +159,19 @@ def user_input_features():
     prediction = model.predict(df)
     probability = model.predict_proba(df)
 
+    return prediction, probability
+
+# store the user input in a variable
+prediction, probability = user_input_features()
+
 # Submit button
 if st.sidebar.button("Predict"):
-    prediction = predict_financial_inclusion(
-        "country", "year", "location_type", "cellphone_access", 
-        "houselhold_size", "age_of_respondent", "marital_status", "education_level", "job_type"
-    )
     st.subheader("Prediction")
-    if prediction == 1:
-        st.success("The person is likely to have or use a bank account")
-    else:
-        st.success("The person is unlikely to have or use a bank account")
+    bank_account = np.array(["No", "Yes"])
+    st.write(bank_account[prediction])
 
     st.subheader("Probability")
-    st.write(prediction)
+    st.write(probability)
 
 # add footer
 st.markdown(
