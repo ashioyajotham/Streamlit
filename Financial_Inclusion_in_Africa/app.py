@@ -84,10 +84,8 @@ with open("Financial_Inclusion_in_Africa/fin-inclusion.pkl",
 
 @st.cache
 # function to clean and tranform the input
-
-
-    # collect inputs
-    input = {
+# collect inputs
+input = {
         "country": country,
         "year": year,
         "location_type": location_type,
@@ -100,10 +98,8 @@ with open("Financial_Inclusion_in_Africa/fin-inclusion.pkl",
         "education_level": education_level,
         "job_type": job_type,
     }
-
-          
-    # create a dataframe
-    data = pd.DataFrame(inputs, columns=["country",
+# create a dataframe
+data = pd.DataFrame(inputs, columns=["country",
         "year",
         "location_type",
         "cellphone_access",
@@ -116,22 +112,22 @@ with open("Financial_Inclusion_in_Africa/fin-inclusion.pkl",
         "job_type"], index=[0])
     
     
-    # perform prediction
-    prediction = model.predict(data)
-    output = int(prediction[0])
-    probas = model.predict_proba(data)
-    probability = "{:.2f}".format(float(probas[:, output]))
+# perform prediction
+prediction = model.predict(data)
+output = int(prediction[0])
+probas = model.predict_proba(data)
+probability = "{:.2f}".format(float(probas[:, output]))
 
-    # Display results
-    st.header("Results")
-    if output == 1:
-        st.write(
+# Display results
+st.header("Results")
+if output == 1:
+    st.write(
             "You are most likely to have a bank account with probability of {} 😊".format(
                 probability
             )
         )
-    elif output == 0:
-        st.write(
+elif output == 0:
+    st.write(
             "You are most likely not to have a bank account with probability of {} 😔".format(
                 probability
             )
