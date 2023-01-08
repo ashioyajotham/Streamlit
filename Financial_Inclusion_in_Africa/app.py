@@ -114,7 +114,7 @@ if submit:
     # create a dataframe
     data = pd.DataFrame(input, index=[0])
     cols_when_model_builds = model.get_booster().feature_names
-    data = data[cols_when_model_builds]
+    data = data[[cols_when_model_builds]]
 
 
     # clean and transform input
