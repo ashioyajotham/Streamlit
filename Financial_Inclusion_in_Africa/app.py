@@ -129,7 +129,7 @@ if submit:
         "relationship_with_head",
         "marital_status",
         "education_level",
-        "job_type])
+        "job_type"])
     output = int(prediction[0])
     probas = model.predict_proba(transformed_data, columns=["country",
         "year",
