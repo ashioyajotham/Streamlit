@@ -12,127 +12,148 @@ How likely is it for one to have a bank acccount?.
 """
 )
 
-# form to collect user information
-my_form = st.form(key="financial_form")
-country = my_form.selectbox("select country", ("Tanzania", "kenya", "Uganda", "Rwanda"))
-location_type = my_form.selectbox("select location", ("Rural", "Urban"))
-year = my_form.number_input("Inter year", min_value=2000, max_value=2100)
-cellphone_access = my_form.selectbox("Do you have a cellphone?", ("Yes", "No"))
-gender_of_respondent = my_form.selectbox("Gender", ("Female", "Male"))
-relationship_with_head = my_form.selectbox(
-    "what is your relationship with the head of the family",
-    (
-        "Spouse",
-        "Head of Household",
-        "Other relative",
-        "Child",
-        "Parent",
-        "Other non-relatives",
-    ),
+def predict_financial_inclusion(
+    country, year, location_type, cellphone_access, 
+    houselhold_size, age_of_respondent, marital_status, education_level, job_type):
+
+    # country
+    if country == "Rwanda":
+        country = 0
+    elif country == "Tanzania":
+        country = 1
+    elif country == "Uganda":
+        country = 2
+    else:
+        country = 3
+
+    # year
+    if year == "2016":
+        year = 0
+    elif year == "2017":
+        year = 1
+    else:
+        year = 2
+
+    # location_type
+    if location_type == "Rural":
+        location_type = 0
+    else:
+        location_type = 1
+
+    # cellphone_access
+    if cellphone_access == "Yes":
+        cellphone_access = 1
+    else:
+        cellphone_access = 0
+
+    # marital_status
+    if marital_status == "Married/Living together":
+        marital_status = 0
+    elif marital_status == "Widowed":
+        marital_status = 1
+    elif marital_status == "Divorced/Seperated":
+        marital_status = 2
+    elif marital_status == "Single/Never Married":
+        marital_status = 3
+    else:
+        marital_status = 4
+
+    # education_level
+    if education_level == "No formal education":
+        education_level = 0
+    elif education_level == "Primary education":
+        education_level = 1
+    elif education_level == "Secondary education":
+        education_level = 2
+    elif education_level == "Vocational/Specialised training":
+        education_level = 3
+    elif education_level == "Tertiary education":
+        education_level = 4
+    else:
+        education_level = 5
+
+    # job_type
+    if job_type == "Farming and Fishing":
+        job_type = 0
+    elif job_type == "Formally employed Government":
+        job_type = 1
+    elif job_type == "Formally employed Private":
+        job_type = 2
+    elif job_type == "Informally employed":
+        job_type = 3
+    elif job_type == "Remittance Dependent":
+        job_type = 4
+    elif job_type == "Self employed":
+        job_type = 5
+    elif job_type == "Other Income":
+        job_type = 6
+    else:
+        job_type = 7
+
+# Let's style the app
+st.markdown(
+    """
+<style>
+body {
+    color: #fff;
+    background-color: #111;
+}
+</style>
+""",
+    unsafe_allow_html=True,
 )
-marital_status = my_form.selectbox(
-    "Your marital status",
-    (
-        "Married/Living together",
-        "Widowed",
-        "Single/Never Married",
-        "Divorced/Seperated",
-        "Dont know",
-    ),
-)
-education_level = my_form.selectbox(
-    "Your education level",
-    (
-        "Secondary education",
-        "No formal education",
-        "Vocation/Specialised training",
-        "Primary education",
-        "Tertiary education",
-        "Other/Dont know/RTA",
-    ),
-)
-job_type = my_form.selectbox(
-    "Your job type",
-    (
-        "Self employed",
-        "Government Dependent",
-        "Formally employed Private",
-        "Informally employed",
-        "Formally employed Government",
-        "Farming and Fishing",
-        "Remittance Dependent",
-        "Other Income",
-        "Dont Know/Refuse to answer",
-        "No Income",
-    ),
-)
-household_size = my_form.number_input(
-    "How many people are living in the house?", min_value=1, max_value=100
-)
 
-age_of_respondent = my_form.number_input("Your age", min_value=18, max_value=120)
+# add sidebar
+st.sidebar.header("User Input Parameters")
 
-submit = my_form.form_submit_button(label="make prediction")
-
-
-# load the model and one-hot-encoder and scaler
-
-with open("Financial_Inclusion_in_Africa/fin-inclusion.pkl",
-    "rb",
-) as f:
-    model = joblib.load(f)
-
-@st.cache
-# function to clean and tranform the input
-# collect inputs
-input = {
-        "country": country,
-        "year": year,
-        "location_type": location_type,
-        "cellphone_access": cellphone_access,
-        "household_size": household_size,
-        "age_of_respondent": age_of_respondent,
-        "gender_of_respondent": gender_of_respondent,
-        "relationship_with_head": relationship_with_head,
-        "marital_status": marital_status,
-        "education_level": education_level,
-        "job_type": job_type,
-    }
-# create a dataframe
-data = pd.DataFrame(input, columns=["country",
-        "year",
-        "location_type",
-        "cellphone_access",
-        "household_size",
-        "age_of_respondent",
-        "gender_of_respondent",
-        "relationship_with_head",
-        "marital_status",
-        "education_level",
-        "job_type"], index=[0])
-    
-    
-# perform prediction
-prediction = model.predict(data)
-output = int(prediction[0])
-probas = model.predict_proba(data)
-probability = "{:.2f}".format(float(probas[:, output]))
-
-# Display results
-st.header("Results")
-if output == 1:
-    st.write(
-            "You are most likely to have a bank account with probability of {} 😊".format(
-                probability
-            )
+# add a selectbox to the sidebar
+def user_input_features():
+    country = st.sidebar.selectbox("Country", ("Kenya", "Rwanda", "Tanzania", "Uganda"))
+    year = st.sidebar.selectbox("Year", ("2016", "2017", "2018"))
+    location_type = st.sidebar.selectbox("Location Type", ("Rural", "Urban"))
+    cellphone_access = st.sidebar.selectbox("Cellphone Access", ("Yes", "No"))
+    houselhold_size = st.sidebar.slider("Houselhold Size", 1, 21, 3)
+    age_of_respondent = st.sidebar.slider("Age of Respondent", 16, 100, 25)
+    marital_status = st.sidebar.selectbox(
+        "Marital Status", (
+            "Married/Living together", "Widowed", "Divorced/Seperated",
+            "Single/Never Married", "Dont know"
         )
-elif output == 0:
-    st.write(
-            "You are most likely not to have a bank account with probability of {} 😔".format(
-                probability
-            )
+    )
+    education_level = st.sidebar.selectbox(
+        "Education Level", (
+            "No formal education", "Primary education", "Secondary education",
+            "Vocational/Specialised training", "Tertiary education", "Other/Dont know/RTA"
         )
+    )
+    job_type = st.sidebar.selectbox(
+        "Job Type", (
+            "Farming and Fishing", "Formally employed Government", "Formally employed Private",
+            "Informally employed", "Remittance Dependent", "Self employed", "Other Income",
+            "No Income"
+        )
+    )
+
+    # load the model
+    model = joblib.load("fin-inclusion.pkl")
+
+    # create a dataframe
+    df = pd.DataFrame(
+        columns=[
+            "country", "year", "location_type", "cellphone_access",
+            "houselhold_size", "age_of_respondent", "marital_status", "education_level", "job_type"
+        ],
+        data=[
+            [
+
+                country, year, location_type, cellphone_access, houselhold_size, 
+                age_of_respondent, marital_status, education_level, job_type
+            ]
+        ],
+    )
+
+    # predictions
+    prediction = model.predict(df)
+    probability = model.predict_proba(df)
 
 
-url = "https://twitter.com/ashioyajotham"
-st.write("Developed by [Victor Jotham Ashioya](%s)" % url)
