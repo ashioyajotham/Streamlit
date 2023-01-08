@@ -112,12 +112,14 @@ if submit:
         "job_type": job_type,
     }
 
-    # create a dataframe
-    data = pd.DataFrame(input)
-    
     # clean and transform input
     transformed_data = preprocessing_data(data=data)
 
+      
+    # create a dataframe
+    data = pd.DataFrame(transformed_data)
+    
+    
     # perform prediction
     prediction = model.predict(transformed_data, columns=["country",
         "year",
