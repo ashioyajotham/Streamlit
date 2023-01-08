@@ -138,7 +138,7 @@ def user_input_features():
     )
 
     # load the model
-    model = joblib.load("fin-inclusion.pkl")
+    model = joblib.load("Financial_Inclusion_in_Africa/fin-inclusion.pkl")
 
     # create a dataframe
     df = pd.DataFrame(
