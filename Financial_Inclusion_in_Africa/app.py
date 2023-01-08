@@ -1,6 +1,5 @@
 #import packages 
 import streamlit as st
-import xgboost
 import joblib
 import pandas as pd
 
@@ -116,10 +115,10 @@ if submit:
     data = pd.DataFrame(input, index=[0])
 
     # clean and transform input
-    transformed_data = preprocessing_data(data=data)
+    transformed_data = preprocessing_data(data=data).as_matrix()
 
     # perform prediction
-    prediction = model.predict(transformed_data).as_matrix()
+    prediction = model.predict(transformed_data)
     output = int(prediction[0])
     probas = model.predict_proba(transformed_data)
     probability = "{:.2f}".format(float(probas[:, output]))
