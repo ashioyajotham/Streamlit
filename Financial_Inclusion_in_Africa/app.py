@@ -113,7 +113,7 @@ if submit:
 
     # create a dataframe
     data = pd.DataFrame(input, index=[0])
-    data = data.reindex(sorted(DataFrame.columns), axis = 1)
+    data = data.reindex(sorted(data.columns), axis = 1)
 
 
     # clean and transform input
