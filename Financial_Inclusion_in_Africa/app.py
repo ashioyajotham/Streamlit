@@ -1,7 +1,9 @@
 import pandas as pd
 import numpy as np
 import streamlit as st
-import pickle
+import xgboost as xgb
+from xgboost import XGBClassifier
+import joblib
 
 def process_input_data(input_data):
       # Convert categorical variables to numerical values
@@ -82,7 +84,8 @@ def process_input_data(input_data):
 
 # Load the model
 pickle_in = open("Financial_Inclusion_in_Africa/fin-inclusion.pkl", "rb")
-model = pickle.load(pickle_in)
+model = XGBClassifier()
+model = joblib.load(pickle_in)
 
 # Define the main app
 def main():
