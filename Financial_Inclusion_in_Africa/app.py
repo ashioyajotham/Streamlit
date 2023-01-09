@@ -161,27 +161,29 @@ def user_input_features():
 
     return prediction, probability
 
-# store the user input in a variable
-prediction, probability = user_input_features()
-
 # Submit button
 if st.sidebar.button("Predict"):
+    prediction, probability = user_input_features()
+
     st.subheader("Prediction")
-    bank_account = np.array(["No", "Yes"])
-    st.write(bank_account[prediction])
+    if prediction == 1:
+        st.write("Yes")
+    else:
+        st.write("No")
 
     st.subheader("Probability")
     st.write(probability)
 
-# add footer
-st.markdown(
-    """
+    # Style more
+    st.markdown(
+        """
 <style>
-footer {
+body {
     color: #fff;
     background-color: #111;
 }
 </style>
 """,
-    unsafe_allow_html=True,
-)
+        unsafe_allow_html=True,
+    )
+    
