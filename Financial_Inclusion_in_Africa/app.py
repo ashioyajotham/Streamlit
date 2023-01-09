@@ -161,29 +161,14 @@ def user_input_features():
 
     return prediction, probability
 
-# Submit button
-if st.sidebar.button("Predict"):
+# Allow user to enter details
+if st.button("Predict"):
     prediction, probability = user_input_features()
-
     st.subheader("Prediction")
     if prediction == 1:
-        st.write("Yes")
+        st.write("Yes, the person has a bank account")
     else:
-        st.write("No")
+        st.write("No, the person does not have a bank account")
 
     st.subheader("Probability")
     st.write(probability)
-
-    # Style more
-    st.markdown(
-        """
-<style>
-body {
-    color: #fff;
-    background-color: #111;
-}
-</style>
-""",
-        unsafe_allow_html=True,
-    )
-    
