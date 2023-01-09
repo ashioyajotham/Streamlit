@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import streamlit as st
-import joblib
+import pickle
 
 def process_input_data(input_data):
       # Convert categorical variables to numerical values
@@ -81,7 +81,7 @@ def process_input_data(input_data):
         ]])
 
 # Load the model
-model = joblib.load('Financial_Inclusion_in_Africa/fin-inclusion.pkl')
+model = pickle.load(open("Financial_Inclusion_in_Africa/fin-inclusion.pkl", "rb"))
 
 # Define the main app
 def main():
@@ -130,7 +130,8 @@ def main():
         processed_input_data = process_input_data(input_data)
 
         # Make predictions
-        prediction = model.predict(processed_input_data)
+        prediction = model.predict(processed_input_data, columns=['country', 'year', 'location_type', 'cellphone_access', 'houselhold_size', 
+        'age_of_respondent', 'marital_status', 'education_level', 'job_type'])
 
 
         # Display the prediction
