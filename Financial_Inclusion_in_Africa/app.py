@@ -137,38 +137,32 @@ def user_input_features():
         )
     )
 
-    # load the model
-    model = joblib.load("Financial_Inclusion_in_Africa/fin-inclusion.pkl")
+# Load the model
+model = joblib.load('fin-inclusion.pkl')
 
-    # create a dataframe
-    df = pd.DataFrame(
-        columns=[
-            "country", "year", "location_type", "cellphone_access",
-            "houselhold_size", "age_of_respondent", "marital_status", "education_level", "job_type"
-        ],
-        data=[
-            [
+# Get the user input values
+user_input = user_input_features()
+country = user_input["country"]
+year = user_input["year"]
+location_type = user_input["location_type"]
+cellphone_access = user_input["cellphone_access"]
+houselhold_size = user_input["houselhold_size"]
+age_of_respondent = user_input["age_of_respondent"]
+marital_status = user_input["marital_status"]
+education_level = user_input["education_level"]
+job_type = user_input["job_type"]
 
-                country, year, location_type, cellphone_access, houselhold_size, 
-                age_of_respondent, marital_status, education_level, job_type
-            ]
-        ],
-    )
+# Convert the input values to a format that is compatible with the model
+input_values = np.array([[
+    country, year, location_type, cellphone_access, 
+    houselhold_size, age_of_respondent, marital_status, education_level, job_type
+]])
 
-    # predictions
-    prediction = model.predict(df)
-    probability = model.predict_proba(df)
+# Use the model to make a prediction
+prediction = model.predict(input_values)[0]
 
-    return prediction, probability
+# Display the prediction
+st.header("Prediction")
+st.write("The model predicts that the respondent will be financially included.")
+st.write("Probability of being financially included: ", prediction)
 
-# Allow user to enter details
-if st.button("Predict"):
-    prediction, probability = user_input_features()
-    st.subheader("Prediction")
-    if prediction == 1:
-        st.write("Yes, the person has a bank account")
-    else:
-        st.write("No, the person does not have a bank account")
-
-    st.subheader("Probability")
-    st.write(probability)
