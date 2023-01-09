@@ -138,7 +138,7 @@ def user_input_features():
     )
 
 # Load the model
-model = joblib.load('fin-inclusion.pkl')
+model = joblib.load('Financial_Inclusion_in_Africa/fin-inclusion.pkl')
 
 # Get the user input values
 user_input = user_input_features()
