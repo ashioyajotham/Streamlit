@@ -3,7 +3,7 @@ import numpy as np
 import streamlit as st
 import xgboost as xgb
 from xgboost import XGBClassifier
-import joblib
+import pickle
 
 def process_input_data(input_data):
       # Convert categorical variables to numerical values
@@ -83,9 +83,80 @@ def process_input_data(input_data):
         ]])
 
 # Load the model
-pickle_in = open("Financial_Inclusion_in_Africa/fin-inclusion.pkl", "rb")
+pickle_in = open("fin-inclusion.pkl", "rb")
 model = XGBClassifier()
-model = joblib.load(pickle_in)
+model = pickle.load(pickle_in)
+
+
+# Define the user input features
+def user_input_features():
+    country = st.sidebar.selectbox("Country", ("Kenya", "Rwanda", "Tanzania", "Uganda"))
+    year = st.sidebar.selectbox("Year", ("2016", "2017", "2018"))
+    location_type = st.sidebar.selectbox("Location Type", ("Rural", "Urban"))
+    cellphone_access = st.sidebar.selectbox("Cellphone Access", ("Yes", "No"))
+    houselhold_size = st.sidebar.slider("Houselhold Size", 1, 21, 3)
+    age_of_respondent = st.sidebar.slider("Age of Respondent", 16, 100, 25)
+    marital_status = st.sidebar.selectbox(
+        "Marital Status", (
+            "Married/Living together", "Widowed", "Divorced/Seperated",
+            "Single/Never Married", "Dont know"
+        )
+    )
+    education_level = st.sidebar.selectbox(
+        "Education Level", (
+            "No formal education", "Primary education", "Secondary education",
+            "Vocational/Specialised training", "Tertiary education", "Other (specify)"
+        )
+    )
+
+    job_type = st.sidebar.selectbox(
+        "Job Type", (
+            "Farming and Fishing", "Formally employed Government",
+            "Formally employed Private", "Informally employed",
+            "Remittance Dependent", "Self employed", "Other Income",
+            "Dont Know/Refuse to answer"
+        )
+    )
+
+    # Store a dictionary into a variable
+    data = {
+        "country": country,
+        "year": year,
+        "location_type": location_type,
+        "cellphone_access": cellphone_access,
+        "houselhold_size": houselhold_size,
+        "age_of_respondent": age_of_respondent,
+        "marital_status": marital_status,
+        "education_level": education_level,
+        "job_type": job_type
+    }
+
+    # Transform the data into a data frame
+    features = pd.DataFrame(data, index=[0])
+    return features
+    
+# Get the user input values
+user_input = user_input_features()
+country = user_input["country"]
+year = user_input["year"]
+location_type = user_input["location_type"]
+cellphone_access = user_input["cellphone_access"]
+houselhold_size = user_input["houselhold_size"]
+age_of_respondent = user_input["age_of_respondent"]
+marital_status = user_input["marital_status"]
+education_level = user_input["education_level"]
+job_type = user_input["job_type"]
+
+# Convert the input values to a format that is compatible with the model
+input_values = np.array([[
+    country, year, location_type, cellphone_access, 
+    houselhold_size, age_of_respondent, marital_status, education_level, job_type
+]])
+
+# Use the model to make a prediction
+prediction = model.predict(input_values)[0]
+
+
 
 # Define the main app
 def main():
@@ -129,13 +200,6 @@ def main():
             )
         }
 
-
-        # Process input data
-        processed_input_data = process_input_data(input_data)
-
-        # Make predictions
-        prediction = model.predict(processed_input_data, columns=['country', 'year', 'location_type', 'cellphone_access', 'houselhold_size', 
-        'age_of_respondent', 'marital_status', 'education_level', 'job_type'])
 
 
         # Display the prediction
