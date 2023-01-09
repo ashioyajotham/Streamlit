@@ -33,7 +33,7 @@ st.markdown(
 st.text("Please fill the form below")
 
 # Load the pickled model
-with open('fin-inclusion.pkl', 'rb') as f:
+with open('Financial_Inclusion_in_Africa/fin-inclusion.pkl', 'rb') as f:
     model = pickle.load(f)
 
 # We created selectbox for categorical columns and used slider 
